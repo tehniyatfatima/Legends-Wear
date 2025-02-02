@@ -1,4 +1,5 @@
 from django.db import models
+# Category, Product, FeaturedSection  
 
 # Create your models here.
 # Model 1 Categories
@@ -16,8 +17,8 @@ class Category(models.Model):
 # Product associated with Category (show all drop down in categories)
 # Stock Availability (Boolean field)
 class Product(models.Model):
-    id = models.CharField()
-    name = models.CharField()
+    product_id = models.CharField(max_length=10)
+    name = models.CharField(max_length=100)
     desc = models.TextField()
     image = models.ImageField(upload_to="products/")
     category = models.ForeignKey(Category, related_name='products', on_delete=models.CASCADE)
@@ -31,7 +32,7 @@ class FeaturedSection(models.Model):
     title = models.CharField(max_length=30)
     description = models.TextField()
     # Many-to-Many relationship to associate multiple products with this featured section
-    featured_products = models.ManyToManyField(Product, related_name='featured_sections')
+    featured_products = models.ManyToManyField(Product, related_name='featured_sections') 
     
     def __str__(self):
         return self.title
