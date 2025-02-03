@@ -1,39 +1,30 @@
 from django.db import models
-# Category, Product, FeaturedSection  
+import uuid  # To generate unique IDs if needed
 
-# Create your models here.
-# Model 1 Categories
-# Categories ID
-# Categories Name
+# Model 1: Category
 class Category(models.Model):
-    category_id = models.CharField(max_length=10, unique=True, editable=False)
-    category_name = models.CharField(max_length=50)
+    name = models.CharField(max_length=255)  # Example field
 
-# Model 2 Products
-# Product ID   
-# Product Name 
-# Product Desc 
-# Product Image
-# Product associated with Category (show all drop down in categories)
-# Stock Availability (Boolean field)
+    def __str__(self):
+        return self.name
+
+# Model 2: Product
 class Product(models.Model):
-    product_id = models.CharField(max_length=10)
+    id = models.AutoField(primary_key=True)  # Auto-generated ID
     name = models.CharField(max_length=100)
-    desc = models.TextField()
+    description = models.TextField()
     image = models.ImageField(upload_to="products/")
     category = models.ForeignKey(Category, related_name='products', on_delete=models.CASCADE)
+    stock_available = models.BooleanField(default=False)  # Default is False
 
     def __str__(self):
-        return self.name 
-    
-# Model 3  Featured section
-# Here all product will listed, user have to check desire product which want to show in featured section
+        return self.name
+
+# Model 3: Featured Section
 class FeaturedSection(models.Model):
-    title = models.CharField(max_length=30)
+    title = models.CharField(max_length=50)
     description = models.TextField()
-    # Many-to-Many relationship to associate multiple products with this featured section
-    featured_products = models.ManyToManyField(Product, related_name='featured_sections') 
-    
+    featured_products = models.ManyToManyField(Product, related_name='featured_sections')
+
     def __str__(self):
         return self.title
-

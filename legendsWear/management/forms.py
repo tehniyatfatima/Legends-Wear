@@ -1,21 +1,20 @@
 from django import forms
-from .models import SliderImage, Footer, Contact_Us 
+from .models import SliderImage, Footer, ContactUs 
 
 class SliderImageForm(forms.ModelForm):
     class Meta:
         model = SliderImage
-        fields = ['SliderImage', 'caption']
+        fields = ['image', 'caption']
         widgets = {
-            'SliderImage': forms.ImageField(attrs={'class': 'slider_image'}),
+            'image': forms.ClearableFileInput(attrs={'class': 'slider_image'}),
             'caption': forms.TextInput(attrs={'class': 'caption'}),
         }
-
 
 
 class FooterForm(forms.ModelForm):
     class Meta:
         model = Footer
-        fields = ['contact']
+        fields = ['contact', 'email_address', 'website_link', 'address', 'instagram', 'facebook']  # Include all necessary fields
         widgets = {
             'contact': forms.TextInput(attrs={'class': 'contact'}), 
             'email_address': forms.TextInput(attrs={'class': 'email_address'}), 
@@ -23,18 +22,16 @@ class FooterForm(forms.ModelForm):
             'address': forms.TextInput(attrs={'class': 'address'}), 
             'instagram': forms.TextInput(attrs={'class': 'instagram'}), 
             'facebook': forms.TextInput(attrs={'class': 'facebook'}), 
-            }
+        }
 
 
 class ContactUsForm(forms.ModelForm):
     class Meta:
-        model = Contact_Us
-        fields = {
+        model = ContactUs
+        fields = ['name', 'contact_no', 'email', 'query']
+        widgets = {
             'name': forms.TextInput(attrs={'class': 'contact_name'}),
             'contact_no': forms.TextInput(attrs={'class': 'contact_no'}),
             'email': forms.EmailInput(attrs={'class': 'contact_email'}),
-            'query': forms.TextArea(attrs={'class': 'query_contact'}),
-            }
-        
-     
-  
+            'query': forms.Textarea(attrs={'class': 'query_contact'}),
+        }

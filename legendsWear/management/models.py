@@ -16,7 +16,7 @@ class Footer(models.Model):
     instagram = models.CharField(max_length=90)
     facebook = models.CharField(max_length=90)
 
-class Contact_Us(models.Model):
+class ContactUs(models.Model):
     name = models.CharField(max_length=100)
     contact_no = models.CharField(max_length=15)
     email = models.EmailField(max_length=30)

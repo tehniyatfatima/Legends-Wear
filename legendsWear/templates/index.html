@@ -4,14 +4,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Legends Wear</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        .container { width: 80%; margin: auto; }
+        .category-list { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; }
+        .category-item { padding: 10px 20px; background: #000; color: #fff; border-radius: 5px; cursor: pointer; }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
+        .product-card { border: 1px solid #ddd; padding: 10px; border-radius: 5px; text-align: center; }
+        .product-card img { width: 100%; height: 200px; object-fit: cover; border-radius: 5px; }
+    </style>
 </head>
 <body>
-    <h1>Legends Wear</h1>
 
-    <!-- Category Section -->
-    
-    <!--  -->
+    <div class="container">
+        <h1>Welcome to Legends Wear</h1>
 
+        <!-- Category Filter -->
+        <div class="category-list">
+            <span class="category-item" onclick="filterProducts('all')">All</span>
+            {% for category in categories %}
+                <span class="category-item" onclick="filterProducts('{{ category.id }}')">{{ category.name }}</span>
+            {% endfor %}
+        </div>
+
+        <!-- Product Grid -->
+        <div class="product-grid">
+            {% for product in products %}
+                <div class="product-card" data-category="{{ product.category.id }}">
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                    <h3>{{ product.name }}</h3>
+                    <p>{{ product.description|truncatewords:15 }}</p>
+                    <p><strong>Stock: {% if product.stock_available %}Available{% else %}Out of Stock{% endif %}</strong></p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script>
+        function filterProducts(category) {
+            let products = document.querySelectorAll('.product-card');
+            products.forEach(product => {
+                if (category === 'all' || product.getAttribute('data-category') === category) {
+                    product.style.display = 'block';
+                } else {
+                    product.style.display = 'none';
+                }
+            });
+        }
+    </script>
 
 </body>
 </html>
